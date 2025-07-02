@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopping Cart - ShopFancy</title>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Jost:wght@300;400;500;700&family=Poppins:wght@200;300;400;600&family=Quicksand:wght@300;400;500;600;700&family=Urbanist:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/details.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="/assets/js/navbar.js" type="module" defer></script>
+  </head>
+  <body>
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+
+    <!-- Navbar will be injected by navbar.js -->
+
+    <main class="cart-page">
+      <div class="container">
+        <div class="cart-header">
+          <h1>Your Shopping Cart</h1>
+          <p>Review your items and proceed to checkout</p>
+          <div class="cart-breadcrumb">
+            <a href="index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Shopping Cart</span>
+          </div>
+        </div>
+
+        <div class="cart-layout">
+          <!-- Left Column: Cart Items -->
+          <div class="cart-items-section">
+            <div class="cart-items-header">
+              <h2>Cart Items</h2>
+              <p class="items-count">(<span id="itemCount">0</span> items)</p>
+            </div>
+            
+            <div id="productCartContainer">
+              <!-- Cart items will be dynamically inserted here -->
+            </div>
+
+            <div class="empty-cart" style="display: none;">
+              <i class="fas fa-shopping-cart"></i>
+              <h2>Your cart is empty</h2>
+              <a href="products.html" class="continue-shopping">
+                <i class="fas fa-arrow-left"></i>
+                Continue Shopping
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Column: Order Summary -->
+          <div class="order-summary-section">
+            <div class="order-summary-card">
+              <div class="summary-header">
+                <h2>Order Summary</h2>
+              </div>
+              <div class="summary-content">
+                <div class="summary-row">
+                  <span>Subtotal</span>
+                  <span class="productSubTotal">₹0</span>
+                </div>
+                <div class="summary-row">
+                  <span>Shipping</span>
+                  <div class="shipping-info">
+                    <span class="productTax">₹50</span>
+                    <small>Free shipping on orders above ₹500</small>
+                  </div>
+                </div>
+                <div class="summary-row discount-row" style="display: none;">
+                  <span>Discount</span>
+                  <span class="discount-amount">-₹0</span>
+                </div>
+                <div class="summary-row total-row">
+                  <span>Total</span>
+                  <div class="total-amount">
+                    <span class="productFinalTotal">₹0</span>
+                    <small>Including GST</small>
+                  </div>
+                </div>
+
+                <div class="promo-section">
+                  <div class="promo-input">
+                    <input type="text" placeholder="Enter promo code" id="promoCode">
+                    <button id="applyPromo">Apply</button>
+                  </div>
+                </div>
+
+                <div class="checkout-section">
+                  <button id="proceedToCheckout" class="checkout-button">
+                    <i class="fas fa-lock"></i>
+                    Proceed to Checkout
+                  </button>
+                  <div class="secure-checkout">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Secure Checkout</span>
+                  </div>
+                </div>
+
+                <div class="payment-methods">
+                  <p>We Accept</p>
+                  <div class="payment-icons">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Template for cart item -->
+    <template id="productCartTemplate">
+      <div class="cart-item">
+        <div class="item-image">
+          <img class="productImage" src="" alt="" />
+        </div>
+        <div class="item-details">
+          <div class="item-header">
+            <span class="category"></span>
+            <h3 class="productName"></h3>
+          </div>
+          <div class="item-price">
+            <span class="productPrice"></span>
+          </div>
+        </div>
+        <div class="item-actions">
+          <div class="quantity-controls">
+            <button class="qty-btn cartDecrement">−</button>
+            <span class="productQuantity">1</span>
+            <button class="qty-btn cartIncrement">+</button>
+          </div>
+          <button class="remove-btn remove-to-cart-button">
+            <i class="fas fa-trash"></i>
+            Remove
+          </button>
+        </div>
+      </div>
+    </template>
+
+    <footer class="section-footer">
+      <script type="module" src="/assets/js/footer.js"></script>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      // Initialize AOS
+      AOS.init({
+        duration: 800,
+        offset: 100,
+      });
+    </script>
+    <script type="module" src="/assets/js/showToast.js"></script>
+    <script type="module" src="/assets/js/showAddToCartCards.js"></script>
+  </body>
+</html>

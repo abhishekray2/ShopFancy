@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - ShopFancy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="/assets/js/navbar.js" type="module" defer></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .confirmation-container {
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-icon {
+            font-size: 80px;
+            color: #48bb78;
+            margin-bottom: 24px;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        h1 {
+            color: #2d3748;
+            font-size: 2rem;
+            margin: 0 0 16px;
+        }
+
+        .order-number {
+            background: #f7fafc;
+            padding: 16px;
+            border-radius: 12px;
+            margin: 24px 0;
+            color: #4a5568;
+            font-size: 1.125rem;
+        }
+
+        .order-number strong {
+            color: #4c51bf;
+            font-weight: 600;
+            display: block;
+            font-size: 1.25rem;
+            margin-top: 8px;
+        }
+
+        p {
+            color: #718096;
+            line-height: 1.6;
+            margin: 16px 0;
+        }
+
+        .email-note {
+            font-size: 0.875rem;
+            color: #a0aec0;
+            margin-top: 24px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 16px;
+            margin-top: 32px;
+            justify-content: center;
+        }
+
+        .button {
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .primary-button {
+            background: #4c51bf;
+            color: white;
+        }
+
+        .primary-button:hover {
+            background: #434190;
+            transform: translateY(-2px);
+        }
+
+        .secondary-button {
+            background: #f7fafc;
+            color: #4a5568;
+            border: 1px solid #e2e8f0;
+        }
+
+        .secondary-button:hover {
+            background: #edf2f7;
+            transform: translateY(-2px);
+        }
+
+        .track-order-section {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .track-order-section h3 {
+            color: #2d3748;
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+        }
+
+        .order-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 24px;
+            position: relative;
+        }
+
+        .order-steps::before {
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: 50px;
+            right: 50px;
+            height: 2px;
+            background: #e2e8f0;
+            z-index: 1;
+        }
+
+        .step {
+            position: relative;
+            z-index: 2;
+            background: white;
+            padding: 0 8px;
+        }
+
+        .step i {
+            font-size: 24px;
+            color: #48bb78;
+            margin-bottom: 8px;
+        }
+
+        .step span {
+            display: block;
+            font-size: 0.75rem;
+            color: #718096;
+            max-width: 80px;
+            text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            .confirmation-container {
+                padding: 24px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .button {
+                width: 100%;
+                text-align: center;
+            }
+
+            .order-steps {
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+
+            .step {
+                flex: 1 1 40%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar will be injected by navbar.js -->
+
+    <div class="confirmation-container">
+        <i class="fas fa-check-circle success-icon"></i>
+        <h1>Order Confirmed!</h1>
+        <p>Thank you for shopping with ShopFancy! Your order has been successfully placed.</p>
+        
+        <div class="order-number">
+            Order Number
+            <strong id="displayOrderNumber">Loading...</strong>
+        </div>
+
+        <p>We'll send you shipping confirmation and tracking details once your order ships.</p>
+        
+        <div class="track-order-section">
+            <h3>Order Status</h3>
+            <div class="order-steps">
+                <div class="step">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Order Confirmed</span>
+                </div>
+                <div class="step">
+                    <i class="fas fa-box"></i>
+                    <span>Processing</span>
+                </div>
+                <div class="step">
+                    <i class="fas fa-shipping-fast"></i>
+                    <span>Shipping</span>
+                </div>
+                <div class="step">
+                    <i class="fas fa-home"></i>
+                    <span>Delivered</span>
+                </div>
+            </div>
+        </div>
+
+        <p class="email-note">A confirmation email has been sent to your registered email address.</p>
+
+        <div class="buttons">
+            <a href="index.html" class="button primary-button">
+                <i class="fas fa-shopping-bag"></i> Continue Shopping
+            </a>
+            <a href="#" class="button secondary-button" id="trackOrderBtn">
+                <i class="fas fa-truck"></i> Track Order
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get order number from session storage
+            const orderNumber = sessionStorage.getItem('lastOrderNumber') || 'SF-2024-000000';
+            document.getElementById('displayOrderNumber').textContent = orderNumber;
+
+            // Track order button click handler
+            document.getElementById('trackOrderBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Order tracking will be available once your order ships.');
+            });
+
+            // Clear order data from session storage after displaying
+            sessionStorage.removeItem('lastOrderNumber');
+        });
+    </script>
+</body>
+
+</html>

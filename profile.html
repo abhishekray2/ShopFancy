@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - ShopFancy</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        .profile-container {
+            max-width: 1200px;
+            margin: 120px auto 40px;
+            padding: 0 20px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 40px;
+            padding: 24px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-picture {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .profile-picture img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-picture-upload {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 8px;
+            text-align: center;
+            cursor: pointer;
+            color: white;
+            font-size: 12px;
+            transition: opacity 0.3s;
+            opacity: 0;
+        }
+
+        .profile-picture:hover .profile-picture-upload {
+            opacity: 1;
+        }
+
+        .profile-info h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .profile-info p {
+            margin: 8px 0;
+            color: #666;
+        }
+
+        .profile-tabs {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .profile-tab {
+            padding: 12px 24px;
+            background: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #666;
+            transition: all 0.3s;
+        }
+
+        .profile-tab.active {
+            background: #4c51bf;
+            color: white;
+        }
+
+        .profile-section {
+            display: none;
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-section.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .btn-save {
+            background: #4c51bf;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .btn-save:hover {
+            background: #434190;
+        }
+
+        .order-card, .wishlist-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .order-header, .wishlist-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-items, .wishlist-items {
+            display: grid;
+            gap: 16px;
+        }
+
+        .product-card {
+            display: flex;
+            gap: 16px;
+            padding: 12px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+        }
+
+        .product-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .product-details {
+            flex: 1;
+        }
+
+        .product-title {
+            margin: 0 0 8px;
+            font-size: 16px;
+        }
+
+        .product-price {
+            color: #4c51bf;
+            font-weight: 600;
+        }
+
+        .security-section .form-group {
+            max-width: 400px;
+        }
+
+        .error-message {
+            color: #ef4444;
+            margin-top: 4px;
+            font-size: 14px;
+        }
+
+        .success-message {
+            color: #10b981;
+            margin-top: 4px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-picture">
+                <img id="profileImage" src="public/images/default-profile.png" alt="Profile Picture">
+                <div class="profile-picture-upload" onclick="document.getElementById('profilePictureInput').click()">
+                    Change Picture
+                </div>
+                <input type="file" id="profilePictureInput" hidden accept="image/*">
+            </div>
+            <div class="profile-info">
+                <h1 id="userName">Loading...</h1>
+                <p id="userEmail">Loading...</p>
+            </div>
+        </div>
+
+        <div class="profile-tabs">
+            <button class="profile-tab active" data-tab="profile">Profile</button>
+            <button class="profile-tab" data-tab="orders">Orders</button>
+            <button class="profile-tab" data-tab="wishlist">Wishlist</button>
+            <button class="profile-tab" data-tab="security">Security</button>
+        </div>
+
+        <div id="profileSection" class="profile-section active">
+            <form id="profileForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address" required>
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" required>
+                </div>
+                <div class="form-group">
+                    <label for="postalCode">Postal Code</label>
+                    <input type="text" id="postalCode" name="postalCode" required>
+                </div>
+                <button type="submit" class="btn-save">Save Changes</button>
+            </form>
+        </div>
+
+        <div id="ordersSection" class="profile-section">
+            <h2>Your Orders</h2>
+            <div id="ordersList">
+                <!-- Orders will be populated here -->
+            </div>
+        </div>
+
+        <div id="wishlistSection" class="profile-section">
+            <h2>Your Wishlist</h2>
+            <div id="wishlistItems">
+                <!-- Wishlist items will be populated here -->
+            </div>
+        </div>
+
+        <div id="securitySection" class="profile-section">
+            <h2>Security Settings</h2>
+            <form id="emailForm" class="form-group">
+                <h3>Change Email</h3>
+                <div class="form-group">
+                    <label for="currentPassword">Current Password</label>
+                    <input type="password" id="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="newEmail">New Email</label>
+                    <input type="email" id="newEmail" required>
+                </div>
+                <button type="submit" class="btn-save">Update Email</button>
+            </form>
+
+            <form id="passwordForm" class="form-group">
+                <h3>Change Password</h3>
+                <div class="form-group">
+                    <label for="oldPassword">Current Password</label>
+                    <input type="password" id="oldPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm New Password</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn-save">Update Password</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="/assets/js/navbar.js"></script>
+    <script src="/assets/js/footer.js"></script>
+    <script>
+        // Check authentication status
+        function checkAuth() {
+            const userId = localStorage.getItem('userId');
+            const token = localStorage.getItem('token');
+            
+            if (!userId || !token) {
+                console.log('No auth credentials found');
+                window.location.href = '/welcome.html';
+                return false;
+            }
+            return true;
+        }
+
+        // Load user data
+        async function loadUserData() {
+            try {
+                const userId = localStorage.getItem('userId');
+                const token = localStorage.getItem('token');
+
+                if (!userId || !token) {
+                    console.log('No auth credentials found in loadUserData');
+                    window.location.href = '/welcome.html';
+                    return;
+                }
+
+                const response = await fetch(`/api/auth/user/${userId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        console.log('Unauthorized access');
+                        localStorage.removeItem('userId');
+                        localStorage.removeItem('token');
+                        window.location.href = '/welcome.html';
+                        return;
+                    }
+                    throw new Error('Failed to fetch user data');
+                }
+
+                const data = await response.json();
+
+                if (data.success) {
+                    const user = data.user;
+                    if (document.getElementById('userName')) {
+                        document.getElementById('userName').textContent = user.profile?.name || 'No Name Set';
+                    }
+                    if (document.getElementById('userEmail')) {
+                        document.getElementById('userEmail').textContent = user.email;
+                    }
+                    if (document.getElementById('name')) {
+                        document.getElementById('name').value = user.profile?.name || '';
+                    }
+                    if (document.getElementById('phone')) {
+                        document.getElementById('phone').value = user.profile?.phone || '';
+                    }
+                    if (document.getElementById('address')) {
+                        document.getElementById('address').value = user.profile?.address || '';
+                    }
+                    if (document.getElementById('city')) {
+                        document.getElementById('city').value = user.profile?.city || '';
+                    }
+                    if (document.getElementById('postalCode')) {
+                        document.getElementById('postalCode').value = user.profile?.postalCode || '';
+                    }
+                    
+                    if (user.profile?.profilePicture && document.getElementById('profileImage')) {
+                        document.getElementById('profileImage').src = user.profile.profilePicture;
+                    }
+                } else {
+                    console.log('Failed to load user data:', data.message);
+                    showToast('Failed to load user data', 'error');
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+                showToast('Failed to load user data', 'error');
+            }
+        }
+
+        // Add Authorization header to all fetch requests
+        async function authenticatedFetch(url, options = {}) {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.log('No token found in authenticatedFetch');
+                window.location.href = '/welcome.html';
+                return;
+            }
+
+            const response = await fetch(url, {
+                ...options,
+                headers: {
+                    ...options.headers,
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok && response.status === 401) {
+                console.log('Token expired or invalid');
+                localStorage.removeItem('userId');
+                localStorage.removeItem('token');
+                window.location.href = '/welcome.html';
+                return;
+            }
+
+            return response;
+        }
+
+        // Handle profile picture upload
+        document.getElementById('profilePictureInput').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = async (e) => {
+                    try {
+                        const userId = localStorage.getItem('userId');
+                        const response = await fetch(`/api/auth/profile-picture/${userId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ imageData: e.target.result })
+                        });
+
+                        const data = await response.json();
+                        if (data.success) {
+                            document.getElementById('profileImage').src = e.target.result;
+                            showToast('Profile picture updated successfully', 'success');
+                        }
+                    } catch (error) {
+                        console.error('Error uploading profile picture:', error);
+                        showToast('Failed to update profile picture', 'error');
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Update profile form submission
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!checkAuth()) return;
+
+            try {
+                const userId = localStorage.getItem('userId');
+                const formData = {
+                    name: document.getElementById('name').value,
+                    phone: document.getElementById('phone').value,
+                    address: document.getElementById('address').value,
+                    city: document.getElementById('city').value,
+                    postalCode: document.getElementById('postalCode').value
+                };
+
+                const response = await authenticatedFetch(`/api/auth/profile/${userId}`, {
+                    method: 'PUT',
+                    body: JSON.stringify(formData)
+                });
+
+                if (!response) return; // authenticatedFetch handled the redirect
+
+                const data = await response.json();
+                if (data.success) {
+                    showToast('Profile updated successfully', 'success');
+                    loadUserData(); // Reload user data after successful update
+                } else {
+                    showToast(data.message || 'Failed to update profile', 'error');
+                }
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                showToast('Failed to update profile', 'error');
+            }
+        });
+
+        // Handle email form submission
+        document.getElementById('emailForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!checkAuth()) return;
+
+            try {
+                const userId = localStorage.getItem('userId');
+                const formData = {
+                    password: document.getElementById('currentPassword').value,
+                    newEmail: document.getElementById('newEmail').value
+                };
+
+                const response = await authenticatedFetch(`/api/auth/email/${userId}`, {
+                    method: 'PUT',
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    document.getElementById('userEmail').textContent = formData.newEmail;
+                    document.getElementById('emailForm').reset();
+                    showToast('Email updated successfully', 'success');
+                }
+            } catch (error) {
+                console.error('Error updating email:', error);
+                showToast('Failed to update email', 'error');
+            }
+        });
+
+        // Handle password form submission
+        document.getElementById('passwordForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!checkAuth()) return;
+
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (newPassword !== confirmPassword) {
+                showToast('Passwords do not match', 'error');
+                return;
+            }
+
+            try {
+                const userId = localStorage.getItem('userId');
+                const formData = {
+                    oldPassword: document.getElementById('oldPassword').value,
+                    newPassword: newPassword
+                };
+
+                const response = await authenticatedFetch(`/api/auth/password/${userId}`, {
+                    method: 'PUT',
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    document.getElementById('passwordForm').reset();
+                    showToast('Password updated successfully', 'success');
+                }
+            } catch (error) {
+                console.error('Error updating password:', error);
+                showToast('Failed to update password', 'error');
+            }
+        });
+
+        // Update other fetch calls similarly
+        async function loadOrders() {
+            if (!checkAuth()) return;
+
+            try {
+                const userId = localStorage.getItem('userId');
+                const response = await authenticatedFetch(`/api/auth/orders/${userId}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    const ordersList = document.getElementById('ordersList');
+                    ordersList.innerHTML = '';
+
+                    if (data.orders.length === 0) {
+                        ordersList.innerHTML = '<p>No orders found</p>';
+                        return;
+                    }
+
+                    data.orders.forEach(order => {
+                        const orderCard = document.createElement('div');
+                        orderCard.className = 'order-card';
+                        orderCard.innerHTML = `
+                            <div class="order-header">
+                                <div>
+                                    <h3>Order #${order.id}</h3>
+                                    <p>Placed on ${new Date(order.date).toLocaleDateString()}</p>
+                                </div>
+                                <div>
+                                    <p class="order-status">${order.status}</p>
+                                    <p class="order-total">Total: $${order.total}</p>
+                                </div>
+                            </div>
+                            <div class="order-items">
+                                ${order.items.map(item => `
+                                    <div class="product-card">
+                                        <img src="${item.image}" alt="${item.name}" class="product-image">
+                                        <div class="product-details">
+                                            <h4 class="product-title">${item.name}</h4>
+                                            <p>Quantity: ${item.quantity}</p>
+                                            <p class="product-price">$${item.price}</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                        ordersList.appendChild(orderCard);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading orders:', error);
+                showToast('Failed to load orders', 'error');
+            }
+        }
+
+        async function loadWishlist() {
+            if (!checkAuth()) return;
+
+            try {
+                const userId = localStorage.getItem('userId');
+                const response = await authenticatedFetch(`/api/auth/wishlist/${userId}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    const wishlistItems = document.getElementById('wishlistItems');
+                    wishlistItems.innerHTML = '';
+
+                    if (data.wishlist.length === 0) {
+                        wishlistItems.innerHTML = '<p>Your wishlist is empty</p>';
+                        return;
+                    }
+
+                    data.wishlist.forEach(item => {
+                        const wishlistCard = document.createElement('div');
+                        wishlistCard.className = 'wishlist-card';
+                        wishlistCard.innerHTML = `
+                            <div class="product-card">
+                                <img src="${item.image}" alt="${item.name}" class="product-image">
+                                <div class="product-details">
+                                    <h4 class="product-title">${item.name}</h4>
+                                    <p class="product-price">$${item.price}</p>
+                                    <button class="btn-save" onclick="addToCart('${item.id}')">Add to Cart</button>
+                                    <button class="btn-save" onclick="removeFromWishlist('${item.id}')">Remove</button>
+                                </div>
+                            </div>
+                        `;
+                        wishlistItems.appendChild(wishlistCard);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading wishlist:', error);
+                showToast('Failed to load wishlist', 'error');
+            }
+        }
+
+        // Handle tab switching
+        document.querySelectorAll('.profile-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and sections
+                document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.profile-section').forEach(s => s.classList.remove('active'));
+
+                // Add active class to clicked tab and corresponding section
+                tab.classList.add('active');
+                document.getElementById(`${tab.dataset.tab}Section`).classList.add('active');
+
+                // Load data for the selected tab
+                if (tab.dataset.tab === 'orders') {
+                    loadOrders();
+                } else if (tab.dataset.tab === 'wishlist') {
+                    loadWishlist();
+                }
+            });
+        });
+
+        // Add to cart function
+        async function addToCart(productId) {
+            if (!checkAuth()) return;
+
+            try {
+                const userId = localStorage.getItem('userId');
+                const response = await fetch(`/api/auth/cart/${userId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ productId })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    showToast('Product added to cart', 'success');
+                }
+            } catch (error) {
+                console.error('Error adding to cart:', error);
+                showToast('Failed to add product to cart', 'error');
+            }
+        }
+
+        // Remove from wishlist function
+        async function removeFromWishlist(productId) {
+            if (!checkAuth()) return;
+
+            try {
+                const userId = localStorage.getItem('userId');
+                const response = await fetch(`/api/auth/wishlist/${userId}/${productId}`, {
+                    method: 'DELETE'
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    loadWishlist();
+                    showToast('Product removed from wishlist', 'success');
+                }
+            } catch (error) {
+                console.error('Error removing from wishlist:', error);
+                showToast('Failed to remove product from wishlist', 'error');
+            }
+        }
+
+        // Show toast notification
+        function showToast(message, type) {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class='bx ${type === 'success' ? 'bx-check' : 'bx-x'}'></i>
+                <span class="toast-message">${message}</span>
+            `;
+
+            const container = document.getElementById('toastContainer') || (() => {
+                const container = document.createElement('div');
+                container.id = 'toastContainer';
+                document.body.appendChild(container);
+                return container;
+            })();
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+                if (container.children.length === 0) {
+                    container.remove();
+                }
+            }, 3000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Page loaded, checking auth...');
+            if (checkAuth()) {
+                console.log('Auth check passed, loading user data...');
+                loadUserData();
+            }
+        });
+    </script>
+</body>
+</html> 

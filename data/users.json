@@ -1,0 +1,18 @@
+{
+  "users": [
+    {
+      "id": "1751052208034",
+      "email": "neonservice08@gmail.com",
+      "password": "$2a$10$ZQ3lQ1IeAQRn.XgPsCMU.eywOdgxqGXghXn6JXTzbU3haricrEs9O",
+      "createdAt": "2025-06-27T19:23:28.034Z",
+      "profile": {
+        "name": "Neon",
+        "phone": "09123456789",
+        "address": "123 Main St",
+        "city": "Anytown",
+        "postalCode": "12345",
+        "dateOfBirth": "1990-01-01"
+      }
+    }
+  ]
+}
