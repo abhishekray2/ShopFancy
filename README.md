@@ -1,4 +1,4 @@
-# ShopFancy - Modern E-Commerce Platform
+# ShopFancy - E-Commerce Platform
 
 ShopFancy is a feature-rich e-commerce platform built with modern web technologies. It offers a seamless shopping experience with a beautiful user interface and robust functionality.
 
