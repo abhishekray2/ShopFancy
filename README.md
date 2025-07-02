@@ -4,7 +4,7 @@ ShopFancy is a feature-rich e-commerce platform built with modern web technologi
 
 ![Hero Image](public/images/heroSection.svg)
 
-## 🚀 Features
+## Features
 
 - **User Authentication**: Secure user registration and login system
 - **Product Catalog**: Browse through various categories of products
@@ -15,7 +15,7 @@ ShopFancy is a feature-rich e-commerce platform built with modern web technologi
 - **Responsive Design**: Works seamlessly across all devices
 - **Real-time Updates**: Cart and product quantity updates in real-time
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 - **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
 - **Backend**: Node.js
@@ -23,7 +23,7 @@ ShopFancy is a feature-rich e-commerce platform built with modern web technologi
 - **Database**: JSON (File-based storage)
 - **Deployment**: Vercel
 
-## 📦 Project Structure
+## Project Structure
 
 ```
 ShopFancy/
@@ -56,7 +56,7 @@ ShopFancy/
     └── more pages...
 ```
 
-## 🚀 Getting Started
+### Getting Started
 
 ### Prerequisites
 
@@ -88,7 +88,7 @@ ShopFancy/
 
 The application will be available at `http://localhost:5173`
 
-## 🌐 Pages
+## Pages
 
 - **Welcome Page** (`welcome.html`): Introduction and onboarding
 - **Home Page** (`index.html`): Main product listing and categories
@@ -101,7 +101,7 @@ The application will be available at `http://localhost:5173`
 - **Contact** (`contact.html`): Customer support and inquiries
 - **Profile** (`profile.html`): User profile management
 
-## 💻 Development
+## Development
 
 ### Building for Production
 
@@ -119,7 +119,7 @@ npm run dev
 
 Runs the app in development mode with hot-reload.
 
-## 🚀 Deployment
+## Deployment
 
 The project is configured for deployment on Vercel. You can deploy in two ways:
 
@@ -134,7 +134,7 @@ The project is configured for deployment on Vercel. You can deploy in two ways:
 2. Run: `vercel login`
 3. Deploy: `vercel`
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
@@ -142,15 +142,15 @@ The project is configured for deployment on Vercel. You can deploy in two ways:
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📝 License
+## License
 
 This project is open source and available under the [MIT License](LICENSE).
 
-## 👥 Authors
+## Authors
 
-- Your Name - Initial work
+- ABHISHEK RAY - Initial work
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Special thanks to all contributors
 - Icons and images from various free resources
