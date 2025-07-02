@@ -9,7 +9,7 @@ export const products = [
     "description": "The most powerful MacBook Pro ever is here. With the blazing-fast M1 Pro chip — the first Apple silicon designed for pros — you get groundbreaking performance and amazing battery life.",
     "price": 199999,
     "stock": 10,
-    "image": "https://i.postimg.cc/hPSGB8CN/laptop.png",
+    "image": "https://github.com/abhishekray2/ShopFancy/blob/main/public/images/laptop.png",
     "model": "MXQT2LL/A",
     "processor": "Apple M1 Pro chip",
     "ram": "16GB unified memory",
@@ -33,7 +33,7 @@ export const products = [
     "description": "The iPhone 14 Pro takes the iPhone's most advanced dual-camera system and adds a third telephoto camera, delivering a pro-level photography experience.",
     "price": 129999,
     "stock": 15,
-    "image": "https://i.postimg.cc/CKjy5X57/iphone.png",
+    "image": "https://github.com/abhishekray2/ShopFancy/blob/main/public/images/iphone.png",
     "model": "A2650",
     "processor": "A16 Bionic chip",
     "ram": "6GB",
@@ -57,7 +57,7 @@ export const products = [
     "description": "Industry-leading noise canceling with Dual Noise Sensor technology. Next-level music with Edge-AI, co-developed with Sony Music Studios Tokyo.",
     "price": 29999,
     "stock": 20,
-    "image": "./public/images/headphone.png",
+    "image": "https://github.com/abhishekray2/ShopFancy/blob/main/public/images/headphone.png",
     "model": "WH-1000XM4",
     "driverSize": "40mm",
     "frequency": "4Hz-40,000Hz",
@@ -78,7 +78,7 @@ export const products = [
     "description": "The most advanced Apple Watch yet with temperature sensing, blood oxygen monitoring, and an Always-On Retina display.",
     "price": 45999,
     "stock": 8,
-    "image": "./public/images/watch.png",
+    "image": "https://github.com/abhishekray2/ShopFancy/blob/main/public/images/watch.png",
     "model": "GPS + Cellular",
     "display": "Always-On Retina LTPO OLED display",
     "batteryLife": "Up to 18 hours",
@@ -100,7 +100,7 @@ export const products = [
     "price": 149.99,
     "stock": 30,
     "description": "Premium portable speaker with immersive 360° sound and robust build quality.",
-    "image": "./public/images/speakers.png",
+    "image": "https://github.com/abhishekray2/ShopFancy/blob/main/public/images/speakers.png",
     "details": {
       "audio": {
         "output_power": "30W RMS",
@@ -163,7 +163,7 @@ export const products = [
     "price": 199.99,
     "stock": 20,
     "description": "42-inch 4K Smart TV with cutting-edge display technology and immersive audio.",
-    "image": "./public/images/tv.png",
+    "image": "https://github.com/abhishekray2/ShopFancy/blob/main/public/images/tv.png",
     "details": {
       "display": {
         "size": "42 inches",
